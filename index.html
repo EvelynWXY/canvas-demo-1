@@ -11,23 +11,57 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div id="canvas"></div>
+    <!--<div id="canvas"></div> -->
+    <canvas id="canvas"></canvas>
     <script>
-      canvas.onclick = (e) => {
-        console.log(e.clientX); //通过log得到鼠标的位置
-        console.log(e.clientY);
-        //console调试大法
-        let div = document.createElement("div"); //创建一个div，在上面加上样式
-        div.style.position = "absolute";
-        div.style.left = e.clientX + "px";
-        div.style.top = e.clientY + "px";
-        div.style.width = "6px";
-        div.style.height = "6px";
-        div.style.marginLeft = "-3px";
-        div.style.marginTop = "-3px";
-        div.style.borderRadius = "50%";
-        div.style.backgroundColor = "black";
-        canvas.appendChild(div); //把div放到canvas里
+      //   canvas.onmousemove = (e) => {
+      //     console.log(e.clientX); //通过log得到鼠标的位置
+      //     console.log(e.clientY);
+      //     //console调试大法
+      //     let div = document.createElement("div"); //创建一个div，在上面加上样式
+      //     div.style.position = "absolute";
+      //     div.style.left = e.clientX + "px";
+      //     div.style.top = e.clientY + "px";
+      //     div.style.width = "6px";
+      //     div.style.height = "6px";
+      //     div.style.marginLeft = "-3px";
+      //     div.style.marginTop = "-3px";
+      //     div.style.borderRadius = "50%";
+      //     div.style.backgroundColor = "black";
+      //     canvas.appendChild(div); //把div放到canvas里
+      //   };
+
+      //画线
+      let canvas = document.getElementById("canvas"); //获取canvas
+
+      canvas.width = document.documentElement.clientWidth; //将canvas的宽度变成文档的宽度
+      canvas.height = document.documentElement.clientHeight; //将canvas的高度变成文档的高度
+
+      let ctx = canvas.getContext("2d");
+      let painting = false;
+      ctx.fillStyle = "black";
+      ctx.strokeStyle = "none";
+
+      canvas.onmousedown = () => {
+        painting = true;
+      };
+
+      canvas.onmousemove = (e) => {
+        if (painting === true) {
+          //   ctx.fillRect(e.clientX - 5, e.clientY - 5, 10, 10);
+          ctx.beginPath();
+          ctx.arc(e.clientX, e.clientY, 10, 0, 2 * Math.PI);
+          ctx.stroke();
+          ctx.fill();
+        } else {
+          console.log("什么都不做");
+        }
+        //     console.log(e.clientX);
+        //     console.log(e.clientY);
+        //     ctx.fillRect(e.clientX - 5, e.clientY - 5, 10, 10);
+      };
+      canvas.onmouseup = () => {
+        painting = false;
       };
     </script>
   </body>
